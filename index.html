@@ -1,17 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="1; url=instagram://user?username=dimoza_">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram Redirect</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Otvori u Instagramu • @dimoza_</title>
+  <meta name="description" content="Brzi link za otvaranje Instagram profila @dimoza_ u aplikaciji.">
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --card:#121826;
+      --txt:#e9eef5;
+      --muted:#9aa6b2;
+      --primary:#6ea8ff;
+      --primary-2:#7c5cff;
+      --line:#20293a;
+      --btn:#1b2333;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 100% -10%, rgba(124,92,255,.15), transparent 40%),
+                  radial-gradient(900px 600px at -10% 110%, rgba(110,168,255,.12), transparent 40%),
+                  var(--bg);
+      color:var(--txt);
+      display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .card{
+      width:100%; max-width:520px; background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 30%),
+                 var(--card);
+      border:1px solid var(--line);
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      border-radius:20px; padding:24px;
+    }
+    .hdr{display:flex; gap:16px; align-items:center; margin-bottom:6px}
+    .avatar{
+      width:64px; height:64px; border-radius:16px;
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(110,168,255,.2));
+      border:1px solid var(--line);
+    }
+    h1{font-size:24px; margin:0 0 4px}
+    .handle{color:var(--muted); font-weight:600}
+    .subtitle{color:var(--muted); margin:10px 0 18px}
+    .cta{
+      display:flex; flex-direction:column; gap:12px; margin-top:10px
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer; text-decoration:none;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 16px; border-radius:14px; font-weight:700; letter-spacing:.2px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#0b0f17; transition: transform .06s ease;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn.secondary{
+      background: var(--btn); color:var(--txt); border:1px solid var(--line); font-weight:600;
+    }
+    .note{color:var(--muted); font-size:14px; margin-top:8px; line-height:1.5}
+    .status{display:none; font-size:13px; color:var(--muted); margin-top:8px}
+    .footer{margin-top:16px; display:flex; gap:10px; justify-content:space-between; align-items:center}
+    .tiny{font-size:12px; color:var(--muted)}
+    .badge{
+      font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--line);
+      background:#0f1523; color:var(--txt)
+    }
+  </style>
   <script>
-    setTimeout(function() {
-      window.location.href = "https://instagram.com/dimoza_";
-    }, 1500);
+    // Konfiguracija
+    const IG_USERNAME = "dimoza_";
+    const IG_DEEP = "instagram://user?username=" + IG_USERNAME;
+    const IG_WEB  = "https://instagram.com/" + IG_USERNAME;
+
+    function openDeepLink() {
+      window.location.href = IG_DEEP;
+      // prikaži status teksta da korisnik zna šta se dešava
+      const s = document.getElementById('status');
+      s.style.display = 'block';
+      s.textContent = "Pokušavam otvoriti Instagram aplikaciju…";
+      // fallback na web posle ~1.5s (radi i na iPhone/Android)
+      setTimeout(() => { window.location.href = IG_WEB; }, 1500);
+    }
+
+    // Automatski pokušaj na load, ali zadrži dugmad
+    window.addEventListener('load', () => {
+      openDeepLink();
+    });
   </script>
 </head>
 <body>
-  <p>Preusmjeravam te na Instagram profil <strong>@dimoza_</strong>...</p>
+  <main class="card" role="main" aria-label="Instagram preusmjeravanje">
+    <div class="hdr">
+      <div class="avatar" aria-hidden="true"></div>
+      <div>
+        <h1>Otvorite link u Instagramu</h1>
+        <div class="handle">@dimoza_</div>
+      </div>
+    </div>
+
+    <p class="subtitle">Ako se aplikacija ne otvori automatski, kliknite na dugme ispod.</p>
+
+    <div class="cta">
+      <a class="btn" href="javascript:void(0)" onclick="openDeepLink()" aria-label="Otvori u Instagram aplikaciji">
+        ▶ Otvori u Instagram aplikaciji
+      </a>
+      <a class="btn secondary" href="https://instagram.com/dimoza_" target="_blank" rel="noopener" aria-label="Otvori u pregledaču">
+        Otvori u pregledaču
+      </a>
+      <div id="status" class="status" aria-live="polite"></div>
+    </div>
+
+    <div class="footer">
+      <span class="tiny">iPhone: iz NFC-a se prvo otvara pregledač – odmah pokušavamo da otvorimo aplikaciju.</span>
+      <span class="badge">iOS & Android</span>
+    </div>
+  </main>
 </body>
 </html>
