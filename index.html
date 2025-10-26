@@ -3,67 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Otvori u Instagramu • @dimoza_</title>
-  <meta name="description" content="Brzi link za otvaranje Instagram profila @dimoza_ u aplikaciji.">
+  <title>Otvorite u Instagramu • @dimoza_</title>
+  <meta name="description" content="Brzi link koji otvara Instagram profil @dimoza_ u aplikaciji (sa fallbackom na web).">
+  <!-- Google Font (fallback na system-ui ako nije dostupan) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b0f17;
-      --card:#121826;
-      --txt:#e9eef5;
-      --muted:#9aa6b2;
-      --primary:#6ea8ff;
-      --primary-2:#7c5cff;
-      --line:#20293a;
-      --btn:#1b2333;
+      --bg:#000000;
+      --txt:#ffffff;
+      --muted:#c9c9c9;
+      --btn:#ffffff;
+      --btn-txt:#000000;
+      --btn-outline:#2a2a2a;
+      --accent:#ffffff;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 100% -10%, rgba(124,92,255,.15), transparent 40%),
-                  radial-gradient(900px 600px at -10% 110%, rgba(110,168,255,.12), transparent 40%),
-                  var(--bg);
-      color:var(--txt);
-      display:flex; align-items:center; justify-content:center; padding:24px;
+      margin:0;
+      background: var(--bg);
+      color: var(--txt);
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      display:flex; align-items:center; justify-content:center;
+      padding: 28px;
     }
+    .wrap{ width:100%; max-width: 720px; }
     .card{
-      width:100%; max-width:520px; background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 30%),
-                 var(--card);
-      border:1px solid var(--line);
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
-      border-radius:20px; padding:24px;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.55);
     }
-    .hdr{display:flex; gap:16px; align-items:center; margin-bottom:6px}
-    .avatar{
-      width:64px; height:64px; border-radius:16px;
-      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(110,168,255,.2));
-      border:1px solid var(--line);
+    .hdr{ display:flex; align-items:center; gap:16px; margin-bottom:6px; }
+    .emoji{ font-size: 42px; }
+    h1{
+      font-size: clamp(26px, 5vw, 36px);
+      line-height: 1.15;
+      margin: 0 0 6px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
-    h1{font-size:24px; margin:0 0 4px}
-    .handle{color:var(--muted); font-weight:600}
-    .subtitle{color:var(--muted); margin:10px 0 18px}
-    .cta{
-      display:flex; flex-direction:column; gap:12px; margin-top:10px
+    .handle{
+      font-weight: 600;
+      font-size: clamp(16px, 3.2vw, 18px);
+      color: var(--muted);
     }
+    .lead{
+      margin: 14px 0 20px;
+      font-size: clamp(16px, 3.6vw, 20px);
+      color: var(--muted);
+    }
+    .cta{ display:flex; flex-direction:column; gap:14px; }
     .btn{
-      appearance:none; border:none; cursor:pointer; text-decoration:none;
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      padding:14px 16px; border-radius:14px; font-weight:700; letter-spacing:.2px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color:#0b0f17; transition: transform .06s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight: 800;
+      font-size: clamp(16px, 3.6vw, 18px);
+      background: var(--btn);
+      color: var(--btn-txt);
+      transition: transform .05s ease, background .2s ease, color .2s ease;
+      border: 1px solid var(--btn-outline);
     }
-    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn:active{ transform: translateY(1px) scale(.99) }
     .btn.secondary{
-      background: var(--btn); color:var(--txt); border:1px solid var(--line); font-weight:600;
+      background: transparent;
+      color: var(--txt);
     }
-    .note{color:var(--muted); font-size:14px; margin-top:8px; line-height:1.5}
-    .status{display:none; font-size:13px; color:var(--muted); margin-top:8px}
-    .footer{margin-top:16px; display:flex; gap:10px; justify-content:space-between; align-items:center}
-    .tiny{font-size:12px; color:var(--muted)}
-    .badge{
-      font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--line);
-      background:#0f1523; color:var(--txt)
+    .status{
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      display: none;
     }
+    .foot{
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid #121212;
+      padding-top: 12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .badge{ padding:6px 10px; border:1px solid #1f1f1f; border-radius:999px; font-size:12px; color:#cfcfcf }
   </style>
   <script>
     // Konfiguracija
@@ -72,47 +96,46 @@
     const IG_WEB  = "https://instagram.com/" + IG_USERNAME;
 
     function openDeepLink() {
-      window.location.href = IG_DEEP;
-      // prikaži status teksta da korisnik zna šta se dešava
+      try {
+        window.location.href = IG_DEEP;
+      } catch(e) {}
       const s = document.getElementById('status');
       s.style.display = 'block';
-      s.textContent = "Pokušavam otvoriti Instagram aplikaciju…";
-      // fallback na web posle ~1.5s (radi i na iPhone/Android)
+      s.textContent = "Pokušavam otvoriti Instagram aplikaciju… 🙂";
       setTimeout(() => { window.location.href = IG_WEB; }, 1500);
     }
 
-    // Automatski pokušaj na load, ali zadrži dugmad
-    window.addEventListener('load', () => {
-      openDeepLink();
-    });
+    window.addEventListener('load', openDeepLink);
   </script>
 </head>
 <body>
-  <main class="card" role="main" aria-label="Instagram preusmjeravanje">
-    <div class="hdr">
-      <div class="avatar" aria-hidden="true"></div>
-      <div>
-        <h1>Otvorite link u Instagramu</h1>
-        <div class="handle">@dimoza_</div>
+  <div class="wrap">
+    <div class="card" role="main" aria-label="Preusmjeravanje na Instagram profil @dimoza_">
+      <div class="hdr">
+        <div class="emoji" aria-hidden="true">📸</div>
+        <div>
+          <h1>Otvorite link u Instagramu</h1>
+          <div class="handle">@dimoza_</div>
+        </div>
+      </div>
+
+      <p class="lead">Ako se aplikacija ne otvori automatski, tapnite na dugme ispod.</p>
+
+      <div class="cta">
+        <a class="btn" href="javascript:void(0)" onclick="openDeepLink()" aria-label="Otvorite u Instagram aplikaciji">
+          ▶ Otvori u Instagram aplikaciji
+        </a>
+        <a class="btn secondary" href="https://instagram.com/dimoza_" target="_blank" rel="noopener" aria-label="Otvorite u pregledaču">
+          Otvori u pregledaču
+        </a>
+        <div id="status" class="status" aria-live="polite"></div>
+      </div>
+
+      <div class="foot">
+        <span>iPhone korisnici: iOS iz NFC-a najprije otvara pregledač – odmah pokušavamo pokrenuti aplikaciju.</span>
+        <span class="badge">Radi na iOS & Android</span>
       </div>
     </div>
-
-    <p class="subtitle">Ako se aplikacija ne otvori automatski, kliknite na dugme ispod.</p>
-
-    <div class="cta">
-      <a class="btn" href="javascript:void(0)" onclick="openDeepLink()" aria-label="Otvori u Instagram aplikaciji">
-        ▶ Otvori u Instagram aplikaciji
-      </a>
-      <a class="btn secondary" href="https://instagram.com/dimoza_" target="_blank" rel="noopener" aria-label="Otvori u pregledaču">
-        Otvori u pregledaču
-      </a>
-      <div id="status" class="status" aria-live="polite"></div>
-    </div>
-
-    <div class="footer">
-      <span class="tiny">iPhone: iz NFC-a se prvo otvara pregledač – odmah pokušavamo da otvorimo aplikaciju.</span>
-      <span class="badge">iOS & Android</span>
-    </div>
-  </main>
+  </div>
 </body>
 </html>
