@@ -48,62 +48,62 @@
       font-weight: 600;
       font-size: clamp(16px, 3.2vw, 18px);
       color: var(--muted);
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Otvorite u Instagramu • @dimoza_</title>
+  <meta name="description" content="Brzi link koji otvara Instagram profil @dimoza_ u aplikaciji (uz fallback na web).">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#000; --txt:#fff; --muted:#c9c9c9; --btn:#fff; --btn-txt:#000; --btn-outline:#2a2a2a; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--txt);
+      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      display:flex; align-items:center; justify-content:center; padding:28px;
     }
-    .lead{
-      margin: 14px 0 20px;
-      font-size: clamp(16px, 3.6vw, 20px);
-      color: var(--muted);
-    }
-    .cta{ display:flex; flex-direction:column; gap:14px; }
+    .wrap{width:100%; max-width:720px}
+    .card{background:#0a0a0a; border:1px solid #1a1a1a; border-radius:22px; padding:28px; box-shadow:0 10px 40px rgba(0,0,0,.55)}
+    .hdr{display:flex; align-items:center; gap:16px; margin-bottom:6px}
+    .emoji{font-size:42px}
+    h1{font-size:clamp(26px,5vw,36px); line-height:1.15; margin:0 0 6px; font-weight:800; letter-spacing:-.02em}
+    .handle{font-weight:600; font-size:clamp(16px,3.2vw,18px); color:var(--muted)}
+    .lead{margin:14px 0 20px; font-size:clamp(16px,3.6vw,20px); color:var(--muted)}
+    .cta{display:flex; flex-direction:column; gap:14px}
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding: 16px 18px;
-      border-radius: 14px;
-      text-decoration:none;
-      font-weight: 800;
-      font-size: clamp(16px, 3.6vw, 18px);
-      background: var(--btn);
-      color: var(--btn-txt);
-      transition: transform .05s ease, background .2s ease, color .2s ease;
-      border: 1px solid var(--btn-outline);
+      padding:16px 18px; border-radius:14px; text-decoration:none;
+      font-weight:800; font-size:clamp(16px,3.6vw,18px);
+      background:var(--btn); color:var(--btn-txt); border:1px solid var(--btn-outline);
+      transition:transform .05s ease
     }
-    .btn:active{ transform: translateY(1px) scale(.99) }
-    .btn.secondary{
-      background: transparent;
-      color: var(--txt);
-    }
-    .status{
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 6px;
-      display: none;
-    }
-    .foot{
-      margin-top: 16px;
-      font-size: 13px;
-      color: var(--muted);
-      border-top: 1px solid #121212;
-      padding-top: 12px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-    }
-    .badge{ padding:6px 10px; border:1px solid #1f1f1f; border-radius:999px; font-size:12px; color:#cfcfcf }
+    .btn:active{transform:translateY(1px) scale(.99)}
+    .btn.secondary{background:transparent; color:var(--txt)}
+    .status{font-size:14px; color:var(--muted); margin-top:6px; display:none}
+    .foot{margin-top:16px; font-size:13px; color:var(--muted); border-top:1px solid #121212; padding-top:12px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .badge{padding:6px 10px; border:1px solid #1f1f1f; border-radius:999px; font-size:12px; color:#cfcfcf}
   </style>
   <script>
-    // Ako samo želiš promijeniti username, zamijeni ispod "dimoza_"
+    // Povećaj VERSION pri svakoj izmjeni (probija keš)
+    const VERSION = "v4";
     const IG_USERNAME = "dimoza_";
     const IG_DEEP = "instagram://user?username=" + IG_USERNAME;
-    const IG_WEB  = "https://instagram.com/" + IG_USERNAME;
+    const IG_WEB  = "https://instagram.com/" + IG_USERNAME + "?" + VERSION;
 
     function openDeepLink() {
       try { window.location.href = IG_DEEP; } catch(e) {}
       const s = document.getElementById('status');
       s.style.display = 'block';
       s.textContent = "Pokušavam otvoriti Instagram aplikaciju… 🙂";
-      // Fallback na web nakon ~1.5 s (radi i iOS i Android)
       setTimeout(() => { window.location.href = IG_WEB; }, 1500);
     }
-
-    // Automatski pokušaj na učitavanje (zadrži i dugmad za ručni tap)
     window.addEventListener('load', openDeepLink);
   </script>
 </head>
@@ -124,10 +124,10 @@
         <a class="btn" href="javascript:void(0)" onclick="openDeepLink()" aria-label="Otvorite u Instagram aplikaciji">
           ▶ Otvori u Instagram aplikaciji
         </a>
-        <a class="btn secondary" href="https://instagram.com/dimoza_" target="_blank" rel="noopener" aria-label="Otvorite u pregledaču">
+        <a class="btn secondary" href="https://instagram.com/dimoza_?v=v4" target="_blank" rel="noopener" aria-label="Otvorite u pregledaču">
           Otvori u pregledaču
         </a>
-        <div id="status" class="status" aria-live="polite"></div>
+        <div id="status" class="status" aria-live="polite">Verzija: v4</div>
       </div>
 
       <div class="foot">
